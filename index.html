@@ -64,6 +64,73 @@ h2{font-size:28px;margin:0 0 14px}
 .footer{margin-top:18px;text-align:center;color:#64748b;font-weight:800}
 @media(max-width:980px){.layout{grid-template-columns:1fr}.photo-grid{grid-template-columns:repeat(3,1fr)}.search-wrap{width:74%}}
 @media(max-width:640px){.nav{flex-direction:column;align-items:stretch}.pill{display:none}.hero{min-height:520px;padding:24px 20px}.hero-photo{top:auto;bottom:0;width:100%;height:52%;border-radius:0 0 30px 30px;opacity:.92}.hero::after{display:none}.doodle1,.search-wrap{width:100%;margin-top:22px}.search{flex-direction:column}button{padding:15px}.weather-photo{display:none}.stat-row,.cards{grid-template-columns:1fr;max-width:100%}.tip img{display:none}.tip p{max-width:100%}.day{grid-template-columns:54px 40px 1fr}.day-desc{display:none}.photo-grid{grid-template-columns:1fr 1fr}.bottom{grid-template-columns:1fr}}
+
+/* 手機緊湊版配置 */
+@media(max-width:640px){
+  .page{width:calc(100% - 14px);padding:7px 0 14px}
+  .nav{border-radius:20px;padding:10px 12px;margin-bottom:10px;gap:8px}
+  .logo{font-size:22px;gap:8px}
+  .sun-logo{width:32px;height:32px;box-shadow:0 0 0 3px #fff5b7}
+  .nav .search{padding:6px;border-radius:18px;gap:6px}
+  .nav input{padding:11px 12px;font-size:14px;border-radius:14px}
+  .nav button{padding:11px 13px;font-size:14px;border-radius:14px}
+
+  .layout{gap:10px}
+  .panel{border-radius:22px}
+  .hero{min-height:330px;padding:16px 14px}
+  .ask{padding:8px 12px;margin-bottom:10px;font-size:14px}
+  h1{font-size:43px;line-height:.94;letter-spacing:-2px}
+  .hero-photo{height:46%;border-radius:0 0 22px 22px}
+  .status{margin-top:8px;font-size:14px}
+
+  .weather{margin-top:10px;min-height:auto;padding:16px 16px 12px}
+  .location{font-size:18px;margin-bottom:8px}
+  .big-temp{font-size:70px;letter-spacing:-3px}
+  .weather-type{font-size:19px;margin-top:4px;gap:8px}
+  .weather-icon{font-size:40px}
+  .stat-row{grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px;padding-bottom:0}
+  .stat{padding:8px 6px;border-radius:14px;font-size:13px;gap:4px;justify-content:center}
+  .stat span{font-size:11px}
+  .stat b{font-size:15px}
+
+  .cards{margin-top:10px;grid-template-columns:repeat(3,1fr);gap:7px}
+  .mini{padding:10px 8px;border-radius:17px;min-height:92px;text-align:center}
+  .mi{font-size:24px}
+  .mt{font-size:12px;margin-top:4px}
+  .mv{font-size:23px;margin-top:4px}
+
+  .side{padding:14px}
+  .tip{min-height:auto;padding:13px 14px;margin-bottom:12px;border-radius:18px}
+  .tip h3{font-size:17px;margin-bottom:4px}
+  .tip p{font-size:13px;line-height:1.5}
+  h2{font-size:21px;margin-bottom:8px}
+  .weekly{gap:6px}
+  .day{grid-template-columns:48px 32px 1fr 52px;padding:7px 9px;border-radius:13px;gap:6px}
+  .day-name{font-size:13px}
+  .day-date{font-size:11px}
+  .day-emoji{font-size:24px}
+  .day-temp{font-size:16px}
+  .day-desc{font-size:12px;display:block}
+
+  .gallery{margin-top:10px;padding:14px;border-radius:22px}
+  .gallery-title{font-size:19px;margin-bottom:10px}
+  .photo-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .photo-card{height:92px;border-radius:14px}
+  .bottom{margin-top:10px;gap:8px}
+  .bubble{border-width:3px;border-radius:20px;padding:13px 16px;font-size:14px;line-height:1.55}
+  .cartoon{font-size:54px}
+  .footer{font-size:12px;margin-top:10px}
+}
+
+/* 平板也稍微壓縮 */
+@media(min-width:641px) and (max-width:980px){
+  .weather{min-height:auto}
+  .stat-row{max-width:100%}
+  .cards{gap:12px}
+  .side{padding:20px}
+  .day{padding:9px 12px}
+}
+
 </style>
 </head>
 <body>

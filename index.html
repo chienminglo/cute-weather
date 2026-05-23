@@ -355,7 +355,7 @@ button{padding:16px}
 </div>
 
 <div class="search">
-<input id="searchInput" placeholder="輸入任何城市，例如：台北、東京、巴黎、New York">
+<input id="searchInput" placeholder="輸入任何城市，例如：台北、台中、高雄、東京、巴黎、New York">
 <button onclick="searchWeather()">查詢天氣</button>
 </div>
 
@@ -432,13 +432,88 @@ alert("請輸入城市名稱");
 return;
 }
 
+const cityMap = {
+"台北": "Taipei",
+"臺北": "Taipei",
+"台北市": "Taipei",
+"臺北市": "Taipei",
+"新北": "New Taipei",
+"新北市": "New Taipei",
+"桃園": "Taoyuan",
+"桃園市": "Taoyuan",
+"新竹": "Hsinchu",
+"新竹市": "Hsinchu",
+"苗栗": "Miaoli",
+"台中": "Taichung",
+"臺中": "Taichung",
+"台中市": "Taichung",
+"臺中市": "Taichung",
+"彰化": "Changhua",
+"南投": "Nantou",
+"雲林": "Yunlin",
+"嘉義": "Chiayi",
+"台南": "Tainan",
+"臺南": "Tainan",
+"台南市": "Tainan",
+"臺南市": "Tainan",
+"高雄": "Kaohsiung",
+"高雄市": "Kaohsiung",
+"屏東": "Pingtung",
+"宜蘭": "Yilan",
+"花蓮": "Hualien",
+"台東": "Taitung",
+"臺東": "Taitung",
+"澎湖": "Penghu",
+"金門": "Kinmen",
+"馬祖": "Matsu",
+
+"東京": "Tokyo",
+"大阪": "Osaka",
+"京都": "Kyoto",
+"首爾": "Seoul",
+"首尔": "Seoul",
+"香港": "Hong Kong",
+"澳門": "Macau",
+"新加坡": "Singapore",
+"曼谷": "Bangkok",
+"吉隆坡": "Kuala Lumpur",
+"胡志明市": "Ho Chi Minh City",
+"河內": "Hanoi",
+"馬尼拉": "Manila",
+"雅加達": "Jakarta",
+"巴黎": "Paris",
+"倫敦": "London",
+"柏林": "Berlin",
+"羅馬": "Rome",
+"米蘭": "Milan",
+"馬德里": "Madrid",
+"巴塞隆納": "Barcelona",
+"阿姆斯特丹": "Amsterdam",
+"紐約": "New York",
+"纽约": "New York",
+"洛杉磯": "Los Angeles",
+"洛杉矶": "Los Angeles",
+"舊金山": "San Francisco",
+"旧金山": "San Francisco",
+"西雅圖": "Seattle",
+"芝加哥": "Chicago",
+"波士頓": "Boston",
+"多倫多": "Toronto",
+"溫哥華": "Vancouver",
+"雪梨": "Sydney",
+"悉尼": "Sydney",
+"墨爾本": "Melbourne"
+};
+
+const finalQuery = cityMap[query] || query;
+
 const status = document.getElementById("status");
 status.innerText = "正在查詢天氣中...";
 
 try{
 
 const geoRes = await fetch(
-`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=zh&format=json`
+`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(finalQuery)}&count=1&language=en&format=json`
 );
 
 const geoData = await geoRes.json();
@@ -462,7 +537,7 @@ const hourly = weather.hourly;
 const weatherInfo = weatherEmoji(current.weather_code);
 
 document.getElementById("city").innerText =
-`${city.name}${city.country ? "・" + city.country : ""}`;
+`${query} → ${city.name}${city.country ? "・" + city.country : ""}`;
 
 document.getElementById("temp").innerText =
 Math.round(current.temperature_2m);
@@ -482,14 +557,20 @@ weatherInfo[1];
 document.getElementById("mainEmoji").innerText =
 weatherInfo[0];
 
+const currentHourIndex = Math.max(0, hourly.time.findIndex(t => t === current.time.slice(0, 13) + ":00"));
 document.getElementById("rain").innerText =
-hourly.precipitation_probability[0] ?? 0;
+hourly.precipitation_probability[currentHourIndex] ?? hourly.precipitation_probability[0] ?? 0;
 
 const hourlyDiv = document.getElementById("hourly");
 
 hourlyDiv.innerHTML = "";
 
-for(let i=0;i<6;i++){
+const startHourIndex = Math.max(0, hourly.time.findIndex(t => t >= current.time.slice(0, 13) + ":00"));
+
+for(let offset=0;offset<6;offset++){
+
+const i = startHourIndex + offset;
+if(i >= hourly.time.length) break;
 
 const hour = hourly.time[i].split("T")[1];
 const temp = Math.round(hourly.temperature_2m[i]);
